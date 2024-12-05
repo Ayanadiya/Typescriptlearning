@@ -24,7 +24,9 @@ router.put('/todo/:todoId', (req, res, next) => {
         };
         res.status(200).json({ message: 'Updated todo', todos: todos });
     }
-    res.status(404).json({ message: "Could not find todo for this Id" });
+    else {
+        res.status(404).json({ message: "Could not find todo for this Id" });
+    }
 });
 router.delete('/todo/:todoId', (req, res, next) => {
     todos = todos.filter((todoItem) => todoItem.id !== req.params.todoId);

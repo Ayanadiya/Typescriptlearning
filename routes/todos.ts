@@ -1,4 +1,5 @@
 import {Router} from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 import { Todo } from '../models/todos';
 
@@ -19,7 +20,7 @@ router.post('/todos', (req,res,next) => {
     res.status(201).json({message:"Added Todo", todo:newTodo, todos:todos});
 })
 
-router.put('/todo/:todoId', (req,res,next) =>{
+router.put('/todo/:todoId', (req:Request<{ todoId: string }>,res: Response,next:NextFunction) =>{
     const tid= req.params.todoId;
     const todoIndex=todos.findIndex(todoItem => todoItem.id===tid);
     if(todoIndex>=0){
@@ -28,7 +29,10 @@ router.put('/todo/:todoId', (req,res,next) =>{
             text:req.body.text};
         res.status(200).json({message:'Updated todo', todos:todos});
         }
+    else
+    {
     res.status(404).json({message:"Could not find todo for this Id"});
+    }    
 });
 
 router.delete('/todo/:todoId', (req,res,next) =>{
